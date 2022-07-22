@@ -1,3 +1,7 @@
 .idea
 **/__pycache__/
+*.conllu
 
+data/pretrained_embeddings/
+mlruns/
+data/saved_models
