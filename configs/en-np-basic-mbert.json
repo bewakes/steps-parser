@@ -1,5 +1,5 @@
 {
-    "experiment": "english_ewt_basic",
+    "experiment": "hi_np_basic",
     "name": "fact_mbert",
     "n_gpu": 1,
 
