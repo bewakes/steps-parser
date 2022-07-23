@@ -6,19 +6,31 @@
 #
 #  Author: Stefan Grünewald
 
+import sys
+lte_3_7 = sys.version_info.major == 3 and sys.version_info.minor <= 7
 import torch
 import random
 
 from torch import nn
 
-from transformers.tokenization_bert import BertTokenizer
-from transformers.modeling_bert import BertModel, BertConfig
+if lte_3_7:
+    from transformers.tokenization_bert import BertTokenizer
+    from transformers.modeling_bert import BertModel, BertConfig
 
-from transformers.tokenization_roberta import RobertaTokenizer
-from transformers.modeling_roberta import RobertaModel, RobertaConfig
+    from transformers.tokenization_roberta import RobertaTokenizer
+    from transformers.modeling_roberta import RobertaModel, RobertaConfig
 
-from transformers.tokenization_xlm_roberta import XLMRobertaTokenizer
-from transformers.modeling_xlm_roberta import XLMRobertaModel, XLMRobertaConfig
+    from transformers.tokenization_xlm_roberta import XLMRobertaTokenizer
+    from transformers.modeling_xlm_roberta import XLMRobertaModel, XLMRobertaConfig
+else:
+    from transformers import BertTokenizer
+    from transformers import BertModel, BertConfig
+
+    from transformers import RobertaTokenizer
+    from transformers import RobertaModel, RobertaConfig
+
+    from transformers import XLMRobertaTokenizer
+    from transformers import XLMRobertaModel, XLMRobertaConfig
 
 from torch.nn import Dropout
 

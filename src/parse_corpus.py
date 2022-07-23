@@ -27,6 +27,25 @@ ENHANCED_UD_EVAL_METRICS = ["Lemmas", "UPOS", "XPOS", "UFeats", "EULAS", "ELAS"]
 DEFAULT_TREEBANK_TYPE = defaultdict(lambda: 0)
 
 
+def parse_corpus_sents(config, corpus_file, output):
+    model = config.init_model()
+    trainer = config.init_trainer(model, None, None)  # Inelegant, but need to do this because trainer handles checkpoint loading
+    parser = trainer.parser
+
+    annotation_layers = config["data_loaders"]["args"]["annotation_layers"]
+    # if keep_columns is not None:
+    #     for col in keep_columns:
+    #         annotation_layers[col] = {"type": "TagSequence", "source_column": col}
+    column_mapping = {annotation_id: annotation_layer["source_column"] for annotation_id, annotation_layer in annotation_layers.items()}
+
+    # dataset = CustomCoNLLDataset.from_corpus_file(corpus_file, annotation_layers)
+    for sentence in corpus_file.readlines():
+        parsed_sentence = parser.parse(sentence)
+        parsed_sentence.show()
+        #for col in keep_columns or []:  # Copy over columns to keep from input corpus
+        #    parsed_sentence.annotation_data[col] = sentence[col]
+        # print(parsed_sentence.to_conll(column_mapping), file=output)
+
 def parse_corpus(config, corpus_file, output, parser=None, keep_columns=None):
     """Parse each sentence of a CoNLL-format input corpus, writing to the specified output file/stream. Can pass either
     a config (in which the parser to be evaluated will be initialized from this config) or a MultiParser object
@@ -140,6 +159,7 @@ if __name__ == '__main__':
     # Required arguments
     argparser.add_argument('model_dir', type=str, help='path to model directory (required)')
     argparser.add_argument('corpus_filename', type=str, help='path to corpus file (required).')
+    argparser.add_argument('--parse_raw_sents', action='store_true', help='parse raw sentences without converting to conllu', default=False)
 
     # Optional arguments
     argparser.add_argument('-o', '--output-filename', type=str, default="", help='output filename. If none is provided,'
@@ -151,11 +171,15 @@ if __name__ == '__main__':
     argparser.add_argument('--lstm', action='store_true', help='Use this flag if model has an LSTM')
 
     args = argparser.parse_args()
+    print(args.parse_raw_sents)
     config = ConfigParser.from_args(args, modification=get_config_modification(args, lstm=args.lstm))
     output_file = create_output(args.output_filename)
 
     with open(args.corpus_filename, "r") as corpus_file:
-        parse_corpus(config, corpus_file, output_file, keep_columns=args.keep_columns)
+        if args.parse_raw_sents:
+            parse_corpus_sents(config, corpus_file, output_file)
+        else:
+            parse_corpus(config, corpus_file, output_file, keep_columns=args.keep_columns)
 
     # Run evaluation
     if args.eval.lower() not in {"", "none"}:

@@ -63,6 +63,29 @@ class AnnotatedSentence:
         """Return the (raw) tokens of this sentence as a whitespace-tokenized string."""
         return "AnnotatedSentence(\"{}\")".format(" ".join(self.tokens[1:]))
 
+    def show(self):
+        # dep_matrix contains dependencies of particular indexed token
+        dep_matrix = self.annotation_data['labels']
+        # Transpose
+        head_matrix = [[row[i] for row in dep_matrix] for i in range(len(dep_matrix))]
+        token_head_labels = []
+        NULL = '[null]'
+        for i, t in enumerate(self.tokens):
+            label = NULL
+            head = 0
+            for j, l in enumerate(head_matrix[i]):
+                if l != NULL:
+                    label = l
+                    head = j
+                    break
+            token_head_labels.append((i, t, head, label))
+
+        title = ' '.join(['index', 'head', 'label'.ljust(10), 'token'])
+        print(title)
+        print('-'*len(title))
+        for i, t, h, l in token_head_labels:
+            print(f'{i:5} {h:4} {l:10} {t}')
+
     def __getitem__(self, item):
         """Return the annotation data for the given annotation ID."""
         return self.annotation_data[item]
