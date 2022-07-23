@@ -5,3 +5,4 @@
 data/pretrained_embeddings/
 mlruns/
 data/saved_models
+*.log

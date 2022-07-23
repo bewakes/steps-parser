@@ -1,0 +1,4 @@
+transformers==3.5.0
+mlflow
+stanza
+pyconll
