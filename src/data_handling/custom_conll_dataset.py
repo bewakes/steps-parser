@@ -9,33 +9,84 @@
 from torch.utils.data import Dataset
 
 from math import inf
+import os
+import itertools
+from pathlib import Path
 
 from data_handling.dependency_matrix import DependencyMatrix
 from data_handling.tag_sequence import TagSequence
 from data_handling.vocab import BasicVocab
 from data_handling.annotated_sentence import AnnotatedSentence
+from util.color_logger import Logger
+
+
+def get_lang(fname):
+    """Get language id from filename
+
+    Args:
+        fname: of the form <lang>.conllu
+    """
+    if not fname.endswith('.conllu'):
+        return
+    return fname.split('.')[0]
+
 
 
 class CustomCoNLLDataset(Dataset):
     """An object of this class represents a (map-style) dataset of annotated sentences in a CoNLL-like format.
     The individual objects contained within the dataset are of type AnnotatedSentence.
     """
-    def __init__(self):
+    def __init__(self, langs=None):
+        """
+        Args:
+            multiple_langs: is true if the dataset needs to concatenate data from multiple languages
+        """
+        self.langs = langs
+        self.lang_sentences = {lang: [] for lang in self.langs}
         self.sentences = list()
 
     def __len__(self):
+        if self.langs:
+            return sum([len(lang_sents) for lang_sents in self.lang_sentences.values()])
+
         return len(self.sentences)
 
     def __getitem__(self, item):
+        if not self.sentences and self.langs:
+            Logger.warn('No sents present and self.langs. Concatanating sentences of all langs')
+            self.sentences = list(itertools.chain(*self.lang_sentences.values()))
         return self.sentences[item]
 
-    def append_sentence(self, sent):
+    def append_sentence(self, sent, lang=None):
         """Append one sentence to the dataset.
 
         Args:
             sent: AnnotatedSentence object to add to the dataset.
         """
-        self.sentences.append(sent)
+        if lang and self.langs:
+            self.lang_sentences[lang].append(sent)
+        else:
+            self.sentences.append(sent)
+
+    @staticmethod
+    def from_corpus_dir(corpus_dirname, annotation_layers, max_sent_len=inf, keep_traces=False):
+        """Similar to from_corpus_filename except that it reads multiple conllu
+        files(multi-lang) from the dir
+        """
+        dirlangs = [get_lang(x) for x in os.listdir(corpus_dirname)]
+        dirlangs = [x for x in dirlangs if x]
+
+        dataset = CustomCoNLLDataset(langs=dirlangs)
+        for lang in dirlangs:
+            fname = lang + '.conllu'
+
+            fpath = Path(corpus_dirname) / fname
+            for raw_conll_sent in _iter_conll_sentences(fpath):
+                processed_sent = AnnotatedSentence.from_conll(raw_conll_sent, annotation_layers, keep_traces=keep_traces)
+                if len(processed_sent) <= max_sent_len:
+                    dataset.append_sentence(processed_sent, lang)
+
+        return dataset
 
     @staticmethod
     def from_corpus_file(corpus_filename, annotation_layers, max_sent_len=inf, keep_traces=False):
@@ -94,7 +145,7 @@ def _iter_conll_sentences(conll_file):
     """
     # CoNLL parsing code adapted from https://github.com/pyconll/pyconll/blob/master/pyconll/_parser.py
     opened_file = False
-    if isinstance(conll_file, str):
+    if isinstance(conll_file, (str, Path)):
         conll_file = open(conll_file, "r")
         opened_file = True
 

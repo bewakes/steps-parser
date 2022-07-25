@@ -41,12 +41,16 @@ class StandardCONLLLoader(DataLoader):
                          collate_fn=lambda x: _batchify(x, self.output_vocabs))
 
 
+def _size_fn(x):
+    return len(x) ** 2
+
+
 class BucketedCONLLLoader(DataLoader):
     """Pytorch DataLoader class for loading batches of sentences from a corpus file in CONLL-U format while performing
     bucketing. For a more detailed description of the bucketing procedure, see documentation of the BucketBatchSampler
     class."""
     def __init__(self, corpus_path, output_vocabs, annotation_layers, batch_size, bucket_size,
-                 size_fn=lambda x: len(x) ** 2, max_sent_len=inf, max_tokens_per_batch=None, keep_traces=False, num_workers=1):
+                 size_fn=_size_fn, max_sent_len=inf, max_tokens_per_batch=None, keep_traces=False, num_workers=1, multiple_langs=False):
         """
         Args:
             corpus_path: Path of the corpus file to load sentence batches from.
@@ -65,14 +69,22 @@ class BucketedCONLLLoader(DataLoader):
 
         assert output_vocabs.keys() == annotation_layers.keys()  # Annotation layers and vocabularies must match
 
-        self.conll_dataset = CustomCoNLLDataset.from_corpus_file(corpus_path, annotation_layers,
-                                                                 max_sent_len=max_sent_len, keep_traces=keep_traces)
+        if multiple_langs:
+            self.conll_dataset = CustomCoNLLDataset.from_corpus_dir(corpus_path, annotation_layers,
+                                                                     max_sent_len=max_sent_len, keep_traces=keep_traces)
+        else:
+            self.conll_dataset = CustomCoNLLDataset.from_corpus_file(corpus_path, annotation_layers,
+                                                                     max_sent_len=max_sent_len, keep_traces=keep_traces)
         self.bucket_sampler = BucketBatchSampler(self.conll_dataset, batch_size, bucket_size,
                                                  size_fn=size_fn, max_cumsize_per_batch=max_tokens_per_batch)
         self.output_vocabs = output_vocabs
 
         super().__init__(self.conll_dataset, batch_sampler=self.bucket_sampler, num_workers=num_workers,
-                         collate_fn=lambda x: _batchify(x, self.output_vocabs))
+                         collate_fn=self._bat)
+
+    def _bat(self, x):
+        return _batchify(x, self.output_vocabs)
+
 
 
 def _batchify(sentences, output_vocabs):
