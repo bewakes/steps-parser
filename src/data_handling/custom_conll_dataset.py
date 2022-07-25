@@ -36,7 +36,7 @@ class CustomCoNLLDataset(Dataset):
     """An object of this class represents a (map-style) dataset of annotated sentences in a CoNLL-like format.
     The individual objects contained within the dataset are of type AnnotatedSentence.
     """
-    def __init__(self, langs=None):
+    def __init__(self, langs=[]):
         """
         Args:
             multiple_langs: is true if the dataset needs to concatenate data from multiple languages
