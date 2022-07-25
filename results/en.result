@@ -1,0 +1,13 @@
+# Training with english dataset and evaluating on Nepali
+
+Metric     | Precision |    Recall |  F1 Score
+-----------+-----------+-----------+----------
+Lemmas     |      0.00 |      0.00 |      0.00
+UPOS       |      0.00 |      0.00 |      0.00
+XPOS       |      0.00 |      0.00 |      0.00
+UFeats     |     26.58 |     26.58 |     26.58
+UAS        |     39.17 |     39.17 |     39.17
+LAS        |     23.90 |     23.90 |     23.90
+CLAS       |     19.31 |     23.18 |     21.07
+MLAS       |      0.00 |      0.00 |      0.00
+BLEX       |      0.00 |      0.00 |      0.00
