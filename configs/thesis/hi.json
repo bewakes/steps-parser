@@ -97,7 +97,7 @@
 
     "trainer": {
         "min_epochs": 15,
-        "max_epochs": 300,
+        "max_epochs": 100,
         "early_stop": 15,
 
         "save_dir": "data/saved_models/",
