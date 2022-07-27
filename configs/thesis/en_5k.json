@@ -1,5 +1,5 @@
 {
-    "experiment": "en_hi_basic",
+    "experiment": "en_basic_5k",
     "name": "fact_mbert",
     "n_gpu": 1,
 
@@ -87,18 +87,18 @@
             "bucket_size": 512,
             "max_tokens_per_batch": 156800,
             "num_workers": 2,
-            "multiple_langs": true
+            "subset_size": 5000
         },
         "paths": {
-            "train": "data/corpora/all/test/",
-            "dev": "data/corpora/all/dev/",
+            "train": "data/corpora/en_ewt/en_ewt-ud-train.conllu",
+            "dev": "data/corpora/en_ewt/en_ewt-ud-dev.conllu",
             "test": "data/corpora/all/test/np.conllu"
         }
     },
 
     "trainer": {
         "min_epochs": 15,
-        "max_epochs": 100,
+        "max_epochs": 300,
         "early_stop": 15,
 
         "save_dir": "data/saved_models/",
