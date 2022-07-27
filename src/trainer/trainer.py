@@ -297,7 +297,7 @@ class Trainer:
             return data.to(self.device)
         elif isinstance(data, dict):
             assert all(isinstance(val, torch.Tensor) for val in data.values())
-            assert all(val.device != self.device for val in data.values())
+            # assert all(val.device != self.device for val in data.values())
             data_on_device = dict()
             for key in data:
                 data_on_device[key] = data[key].to(self.device)

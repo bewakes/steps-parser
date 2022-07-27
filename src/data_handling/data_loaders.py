@@ -50,7 +50,8 @@ class BucketedCONLLLoader(DataLoader):
     bucketing. For a more detailed description of the bucketing procedure, see documentation of the BucketBatchSampler
     class."""
     def __init__(self, corpus_path, output_vocabs, annotation_layers, batch_size, bucket_size,
-                 size_fn=_size_fn, max_sent_len=inf, max_tokens_per_batch=None, keep_traces=False, num_workers=1, multiple_langs=False):
+                 size_fn=_size_fn, max_sent_len=inf, max_tokens_per_batch=None, keep_traces=False,
+                 num_workers=1, multiple_langs=False, subset_size=None):
         """
         Args:
             corpus_path: Path of the corpus file to load sentence batches from.
@@ -74,7 +75,8 @@ class BucketedCONLLLoader(DataLoader):
                                                                      max_sent_len=max_sent_len, keep_traces=keep_traces)
         else:
             self.conll_dataset = CustomCoNLLDataset.from_corpus_file(corpus_path, annotation_layers,
-                                                                     max_sent_len=max_sent_len, keep_traces=keep_traces)
+                                                                     max_sent_len=max_sent_len, keep_traces=keep_traces,
+                                                                     subset_size=subset_size)
         self.bucket_sampler = BucketBatchSampler(self.conll_dataset, batch_size, bucket_size,
                                                  size_fn=size_fn, max_cumsize_per_batch=max_tokens_per_batch)
         self.output_vocabs = output_vocabs

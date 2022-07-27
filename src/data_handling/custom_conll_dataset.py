@@ -71,7 +71,8 @@ class CustomCoNLLDataset(Dataset):
     @staticmethod
     def from_corpus_dir(corpus_dirname, annotation_layers, max_sent_len=inf, keep_traces=False):
         """Similar to from_corpus_filename except that it reads multiple conllu
-        files(multi-lang) from the dir
+        files(multi-lang) from the dir.
+        NOTE: This function does not take in subset_size parameter.
         """
         dirlangs = [get_lang(x) for x in os.listdir(corpus_dirname)]
         dirlangs = [x for x in dirlangs if x]
@@ -89,7 +90,7 @@ class CustomCoNLLDataset(Dataset):
         return dataset
 
     @staticmethod
-    def from_corpus_file(corpus_filename, annotation_layers, max_sent_len=inf, keep_traces=False):
+    def from_corpus_file(corpus_filename, annotation_layers, max_sent_len=inf, keep_traces=False, subset_size=None):
         """Read in a dataset from a corpus file in CoNLL format.
 
         Args:
@@ -97,17 +98,21 @@ class CustomCoNLLDataset(Dataset):
             annotation_layers: Dictionary mapping annotation IDs to annotation type and CoNLL column to read data from.
             max_sent_len: The maximum length of any given sentence. Sentences with a greater length are ignored.
             keep_traces: Whether to keep empty nodes as tokens (used in enhanced UD; default: False).
-
+            subset_size: If we want only N of the total sentences in corpus file. If None, all will be retrieved.
         Returns:
             A CustomCoNLLDataset object containing the sentences in the input corpus file, with the specified annotation
             layers.
         """
         dataset = CustomCoNLLDataset()
 
-        for raw_conll_sent in _iter_conll_sentences(corpus_filename):
+        iterator = _iter_conll_sentences(corpus_filename)
+        for i, raw_conll_sent in enumerate(iterator):
             processed_sent = AnnotatedSentence.from_conll(raw_conll_sent, annotation_layers, keep_traces=keep_traces)
             if len(processed_sent) <= max_sent_len:
                 dataset.append_sentence(processed_sent)
+
+            if subset_size is not None and i >= subset_size-1:
+                break
 
         return dataset
 
