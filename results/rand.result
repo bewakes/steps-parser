@@ -1,0 +1,31 @@
+# Running on English dataset of size 100 and epoch 1 since running zero epoch did not conform with the training framework
+
+ Metric     | Precision |    Recall |  F1 Score
+ -----------+-----------+-----------+----------
+ Lemmas     |      0.00 |      0.00 |      0.00
+ UPOS       |      0.00 |      0.00 |      0.00
+ XPOS       |      0.00 |      0.00 |      0.00
+ UFeats     |     26.58 |     26.58 |     26.58
+*UAS        |     11.96 |     11.96 |     11.96
+*LAS        |      3.01 |      3.01 |      3.01
+ CLAS       |     17.50 |      1.78 |      3.24
+ MLAS       |      0.00 |      0.00 |      0.00
+ BLEX       |      0.00 |      0.00 |      0.00
+uas_final_test: 11.96%
+las_final_test: 3.01%
+
+
+# Second run of the same experiment
+ Metric     | Precision |    Recall |  F1 Score
+ -----------+-----------+-----------+----------
+ Lemmas     |      0.00 |      0.00 |      0.00
+ UPOS       |      0.00 |      0.00 |      0.00
+ XPOS       |      0.00 |      0.00 |      0.00
+ UFeats     |     26.58 |     26.58 |     26.58
+*UAS        |     13.57 |     13.57 |     13.57
+*LAS        |      3.48 |      3.48 |      3.48
+ CLAS       |     23.00 |      2.34 |      4.25
+ MLAS       |      0.00 |      0.00 |      0.00
+ BLEX       |      0.00 |      0.00 |      0.00
+uas_final_test: 13.57%
+las_final_test: 3.48%

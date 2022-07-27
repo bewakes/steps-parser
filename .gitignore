@@ -7,3 +7,4 @@ mlruns/
 data/saved_models
 *.log
 raw_input.txt
+venv-steps/
