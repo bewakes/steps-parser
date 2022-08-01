@@ -90,7 +90,7 @@
         },
         "paths": {
             "train": "data/corpora/np/nep-test.conllu",
-            "dev": "data/corpora/en_ewt/nep-test.conllu",
+            "dev": "data/corpora/np/nep-test.conllu",
             "test": "data/corpora/np/nep-test.conllu"
         }
     },

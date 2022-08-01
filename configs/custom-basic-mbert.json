@@ -97,7 +97,8 @@
                 "subset_size": 100
             },
             "test_config": {
-                "multiple_langs": true
+                "multiple_langs": true,
+                "langs": ["hi", "np"]
             }
         },
         "paths": {
@@ -108,8 +109,8 @@
     },
 
     "trainer": {
-        "min_epochs": 15,
-        "max_epochs": 100,
+        "min_epochs": 1,
+        "max_epochs": 1,
         "early_stop": 15,
 
         "save_dir": "data/saved_models/",
