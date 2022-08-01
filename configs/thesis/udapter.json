@@ -1,5 +1,5 @@
 {
-    "experiment": "hi_np_basic",
+    "experiment": "udapter_replication",
     "name": "fact_mbert",
     "n_gpu": 1,
 
@@ -41,7 +41,7 @@
                         "vocab": {
                             "type": "BasicVocab",
                             "args": {
-                                "vocab_filename": "data/corpora/np/vocab/basic.vocab"
+                                "vocab_filename": "data/corpora/all/basic.vocab"
                             }
                         }
                     }
@@ -82,15 +82,32 @@
                     }
                 }
             },
+
             "batch_size": 32,
             "bucket_size": 512,
             "max_tokens_per_batch": 156800,
-            "num_workers": 2
+            "num_workers": 2,
+            "train_config": {
+                "multiple_langs": true,
+                "langs": ["ar", "en", "eu", "fi", "he", "hi", "it", "ja", "ko", "ru", "sv", "tr", "zh"],
+                "samples_per_lang": 5,
+                "total_samples_size": 1500
+            },
+            "dev_config": {
+                "multiple_langs": true,
+                "langs": ["ar", "en", "eu", "fi", "he", "hi", "it", "ja", "ko", "ru", "sv", "tr", "zh"],
+                "samples_per_lang": 100
+            },
+            "test_config": {
+                "multiple_langs": true,
+                "langs": ["ta", "te", "hi", "mr", "sa"],
+                "samples_per_lang": 1000
+            }
         },
         "paths": {
-            "train": "data/corpora/np/nep-test.conllu",
-            "dev": "data/corpora/np/nep-test.conllu",
-            "test": "data/corpora/np/nep-test.conllu"
+            "train": "data/corpora/all/train/",
+            "dev": "data/corpora/all/dev/",
+            "test": "data/corpora/all/test/"
         }
     },
 
