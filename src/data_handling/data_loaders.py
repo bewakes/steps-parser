@@ -51,7 +51,7 @@ class BucketedCONLLLoader(DataLoader):
     class."""
     def __init__(self, corpus_path, output_vocabs, annotation_layers, batch_size, bucket_size,
                  size_fn=_size_fn, max_sent_len=inf, max_tokens_per_batch=None, keep_traces=False,
-                 num_workers=1, multiple_langs=False, subset_size=None):
+                 num_workers=1, load_config=None):
         """
         Args:
             corpus_path: Path of the corpus file to load sentence batches from.
@@ -66,17 +66,19 @@ class BucketedCONLLLoader(DataLoader):
             max_tokens_per_batch: The maximum cumulative size that a batch is allowed to have.
             keep_traces: Whether to keep empty nodes as tokens (used in enhanced UD; default: False).
             num_workers: Wow many subprocesses to use for data loading.
+            load_config: E.g: {"multiple_langs": true, "langs": ["hi"], "subset_size": 100, "samples_per_lang": 10}
         """
 
         assert output_vocabs.keys() == annotation_layers.keys()  # Annotation layers and vocabularies must match
 
-        if multiple_langs:
+        if load_config is not None and load_config.get('multiple_langs'):
             self.conll_dataset = CustomCoNLLDataset.from_corpus_dir(corpus_path, annotation_layers,
-                                                                     max_sent_len=max_sent_len, keep_traces=keep_traces)
+                                                                    max_sent_len=max_sent_len, keep_traces=keep_traces,
+                                                                    **load_config)
         else:
             self.conll_dataset = CustomCoNLLDataset.from_corpus_file(corpus_path, annotation_layers,
                                                                      max_sent_len=max_sent_len, keep_traces=keep_traces,
-                                                                     subset_size=subset_size)
+                                                                    subset_size=load_config and load_config.get('subset_size'))
         self.bucket_sampler = BucketBatchSampler(self.conll_dataset, batch_size, bucket_size,
                                                  size_fn=size_fn, max_cumsize_per_batch=max_tokens_per_batch)
         self.output_vocabs = output_vocabs

@@ -36,18 +36,21 @@ class CustomCoNLLDataset(Dataset):
     """An object of this class represents a (map-style) dataset of annotated sentences in a CoNLL-like format.
     The individual objects contained within the dataset are of type AnnotatedSentence.
     """
-    def __init__(self, langs=[]):
+    def __init__(self, langs=[], total_samples_size=None):
         """
-        Args:
-            multiple_langs: is true if the dataset needs to concatenate data from multiple languages
         """
         self.langs = langs
+        self.total_samples_size = total_samples_size
         self.lang_sentences = {lang: [] for lang in self.langs}
         self.sentences = list()
 
     def __len__(self):
         if self.langs:
-            return sum([len(lang_sents) for lang_sents in self.lang_sentences.values()])
+            size = sum([len(lang_sents) for lang_sents in self.lang_sentences.values()])
+        else:
+            size = len(self.sentences)
+        if self.total_samples_size:
+            return min(size, self.total_samples_size)
 
         return len(self.sentences)
 
@@ -69,20 +72,24 @@ class CustomCoNLLDataset(Dataset):
             self.sentences.append(sent)
 
     @staticmethod
-    def from_corpus_dir(corpus_dirname, annotation_layers, max_sent_len=inf, keep_traces=False):
+    def from_corpus_dir(corpus_dirname, annotation_layers, max_sent_len=inf,
+            keep_traces=False,multiple_langs=None, samples_per_lang=None,langs=None,total_samples_size=None):
         """Similar to from_corpus_filename except that it reads multiple conllu
         files(multi-lang) from the dir.
         NOTE: This function does not take in subset_size parameter.
         """
         dirlangs = [get_lang(x) for x in os.listdir(corpus_dirname)]
-        dirlangs = [x for x in dirlangs if x]
+        dirlangs = [x for x in dirlangs if x and (langs is None or x in langs)]
 
-        dataset = CustomCoNLLDataset(langs=dirlangs)
+        dataset = CustomCoNLLDataset(langs=dirlangs, total_samples_size=total_samples_size)
         for lang in dirlangs:
             fname = lang + '.conllu'
 
             fpath = Path(corpus_dirname) / fname
-            for raw_conll_sent in _iter_conll_sentences(fpath):
+            iterator = _iter_conll_sentences(fpath)
+            for i, raw_conll_sent in enumerate(iterator):
+                if samples_per_lang and i >= samples_per_lang:
+                    break
                 processed_sent = AnnotatedSentence.from_conll(raw_conll_sent, annotation_layers, keep_traces=keep_traces)
                 if len(processed_sent) <= max_sent_len:
                     dataset.append_sentence(processed_sent, lang)

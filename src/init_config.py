@@ -205,11 +205,18 @@ class ConfigParser:
         data_loader_type = params["type"]
         data_loader_args = params["args"]
 
+        loader_configs = {
+            'train': data_loader_args.pop('train_config', None),
+            'dev': data_loader_args.pop('dev_config', None),
+            'test': data_loader_args.pop('test_config', None),
+        }
+
         data_loader_args["output_vocabs"] = {outp_id: model.outputs[outp_id].vocab for outp_id in model.outputs}
 
         data_loaders = dict()
         for p in params["paths"]:
             data_loader_args["corpus_path"] = params["paths"][p]
+            data_loader_args["load_config"] = loader_configs.get(p)
             data_loaders[p] = getattr(data_loaders_module, data_loader_type)(**data_loader_args)
 
         return data_loaders

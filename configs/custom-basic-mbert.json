@@ -87,11 +87,22 @@
             "bucket_size": 512,
             "max_tokens_per_batch": 156800,
             "num_workers": 2,
-            "multiple_langs": true
+            "train_config": {
+                "multiple_langs": true,
+                "langs": ["hi"],
+                "total_samples_size": 100,
+                "samples_per_lang": 10
+            },
+            "dev_config": {
+                "subset_size": 100
+            },
+            "test_config": {
+                "multiple_langs": true
+            }
         },
         "paths": {
             "train": "data/corpora/all/train/",
-            "dev": "data/corpora/all/dev/",
+            "dev": "data/corpora/all/dev/np.conllu",
             "test": "data/corpora/all/test/"
         }
     },
