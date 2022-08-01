@@ -8,6 +8,7 @@
 
 """Main script for training a parser based on a configuration file."""
 
+import os
 import argparse
 
 from pathlib import Path
@@ -50,12 +51,31 @@ def evaluate_best_trained_model(trainer, config, eval_mode="basic"):
     logger = config.logger
 
     logger.info("Evaluation on test set:")
+    args = config["data_loaders"]["args"]
 
-    with open(config["data_loaders"]["paths"]["test"], "r") as gold_test_file, \
+    load_config = args.get("load_config")
+    multiple_langs = load_config and load_config.get("multiple_langs")
+    if multiple_langs:
+        langs = load_config.get("langs")
+        test_dir = Path(config["data_loaders"]["paths"]["test"])
+        for fname in os.listdir(test_dir):
+            [lang, ext] = fname .split(".")
+            if langs and lang not in langs:
+                continue
+            test_data_path = test_dir / fname
+            print(f'<<<<< TEST FOR LANGUAGE {lang} >>>>>')
+            run_test(test_data_path, trainer, logger, eval_mode)
+    else:
+        test_data_path = config["data_loaders"]["paths"]["test"]
+        run_test(test_data_path, trainer, logger, eval_mode)
+
+
+def run_test(test_data_path, trainer, logger, eval_mode):
+    with open(test_data_path, "r") as gold_test_file, \
          open("test-parsed.conllu", "w") as output_file:
         parse_corpus(config, gold_test_file, output_file, parser=trainer.parser)
         output_file = reset_file(output_file, "test-parsed.conllu")
-        gold_test_file = reset_file(gold_test_file, config["data_loaders"]["paths"]["test"])
+        gold_test_file = reset_file(gold_test_file, test_data_path)
         test_evaluation = run_evaluation(gold_test_file, output_file, mode=eval_mode)
 
     if eval_mode == "basic":
