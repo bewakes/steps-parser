@@ -90,8 +90,7 @@
             "train_config": {
                 "multiple_langs": true,
                 "langs": ["ar", "en", "eu", "fi", "he", "hi", "it", "ja", "ko", "ru", "sv", "tr", "zh"],
-                "samples_per_lang": 5,
-                "total_samples_size": 1500
+                "samples_per_lang": 1500
             },
             "dev_config": {
                 "multiple_langs": true,
