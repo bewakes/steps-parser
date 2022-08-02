@@ -72,3 +72,18 @@ MLAS       |      0.00 |      0.00 |      0.00
 BLEX       |      0.00 |      0.00 |      0.00
 uas_final_test: 42.38%
 las_final_test: 19.51%
+
+<<<<< TEST FOR LANGUAGE np >>>>>
+Metric     | Precision |    Recall |  F1 Score
+-----------+-----------+-----------+----------
+Lemmas     |      0.00 |      0.00 |      0.00
+UPOS       |      0.00 |      0.00 |      0.00
+XPOS       |      0.00 |      0.00 |      0.00
+UFeats     |     26.58 |     26.58 |     26.58
+UAS        |     59.52 |     59.52 |     59.52
+LAS        |     47.47 |     47.47 |     47.47
+CLAS       |     36.93 |     41.11 |     38.91
+MLAS       |      0.00 |      0.00 |      0.00
+BLEX       |      0.00 |      0.00 |      0.00
+uas_final_test: 59.52%
+las_final_test: 47.47%

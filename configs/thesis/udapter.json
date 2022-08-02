@@ -1,5 +1,5 @@
 {
-    "experiment": "udapter_replication",
+    "experiment": "udapter_replication_source_2500_each",
     "name": "fact_mbert",
     "n_gpu": 1,
 
@@ -90,7 +90,7 @@
             "train_config": {
                 "multiple_langs": true,
                 "langs": ["ar", "en", "eu", "fi", "he", "hi", "it", "ja", "ko", "ru", "sv", "tr", "zh"],
-                "samples_per_lang": 1500
+                "samples_per_lang": 2500
             },
             "dev_config": {
                 "multiple_langs": true,
@@ -99,7 +99,7 @@
             },
             "test_config": {
                 "multiple_langs": true,
-                "langs": ["ta", "te", "hi", "mr", "sa"],
+                "langs": ["ta", "te", "hi", "mr", "sa", "np"],
                 "samples_per_lang": 1000
             }
         },
