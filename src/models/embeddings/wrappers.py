@@ -35,6 +35,12 @@ else:
 from torch.nn import Dropout
 
 from models.embeddings.scalar_mix import ScalarMixWithDropout
+from util.lang_embeddings import get_lang_embeddings
+
+
+def get_dummy_lang_embedding_for_batch(batch_size, seq_len, lang_embedding_dim):
+    lang = torch.zeros(1, lang_embedding_dim)
+    return lang.repeat(batch_size, seq_len, 1)
 
 
 class Wrapper(nn.Module):
@@ -47,7 +53,7 @@ class Wrapper(nn.Module):
     """
     def __init__(self, model_class, tokenizer_class, config_class, model_path, output_ids, tokenizer_path=None,
                  config_only=False, fine_tune=True, shared_embeddings=None, hidden_dropout=0.2, attn_dropout=0.2,
-                 output_dropout=0.5, scalar_mix_layer_dropout=0.1, token_mask_prob=0.2):
+                 output_dropout=0.5, scalar_mix_layer_dropout=0.1, token_mask_prob=0.2, language_embeddings_dim=None):
         """
         Args:
             model_class: Class of transformer model to use for token embeddings.
@@ -66,6 +72,7 @@ class Wrapper(nn.Module):
             output_dropout: Dropout ratio for embeddings output.
             scalar_mix_layer_dropout: Dropout ratio for transformer layers.
             token_mask_prob: Probability of replacing input tokens with mask token.
+            language_embeddings_dim: if to include language embeddings by concatenation
         """
         super(Wrapper, self).__init__()
         self.output_ids = output_ids
@@ -75,6 +82,7 @@ class Wrapper(nn.Module):
                                                       hidden_dropout=hidden_dropout, attn_dropout=attn_dropout)
 
         self.token_mask_prob = token_mask_prob
+        self.language_embeddings_dim = language_embeddings_dim
         self.embedding_dim = self.model.config.hidden_size
         self.fine_tune = fine_tune
 
@@ -122,7 +130,7 @@ class Wrapper(nn.Module):
 
         return scalar_mix
 
-    def forward(self, input_sentences):
+    def forward(self, input_sentences, langs=None):
         """Transform a bunch of input sentences (list of lists of tokens) into a batch (tensor) of
         BERT/RoBERTa/etc. embeddings.
 
@@ -142,7 +150,11 @@ class Wrapper(nn.Module):
         # For each output, extract only the relevant embeddings and add a learned [root] token at the beginning
         processed_embeddings = dict()
         for output_id in self.output_ids:
-            processed_embeddings[output_id] = self._process_embeddings(raw_embeddings[output_id], model_inputs["original_token_mask"])
+            processed_embeddings[output_id] = self._process_embeddings(
+                raw_embeddings[output_id],
+                model_inputs["original_token_mask"],
+                langs,
+            )
 
         # Compute true sequence lengths and put into tensor (new method)
         true_seq_lengths = self._compute_true_seq_lengths(input_sentences, device=model_inputs["device"])
@@ -190,7 +202,7 @@ class Wrapper(nn.Module):
 
         return raw_embeddings
 
-    def _process_embeddings(self, raw_embeddings, original_token_mask):
+    def _process_embeddings(self, raw_embeddings, original_token_mask, langs):
         """Extract only those embeddings which correspond to original tokens in the input sentence, i.e., discard
         all the embeddings which are marked 0 in the original token mask.
 
@@ -224,6 +236,12 @@ class Wrapper(nn.Module):
         # ---------------------------------------------------------------------------------------------------------
         root_embedding_expanded = self.root_embedding.unsqueeze(0).unsqueeze(0).expand((batch_size, 1, self.embedding_dim))
         embeddings_with_root = torch.cat((root_embedding_expanded, embeddings_stripped), dim=1)
+
+        if self.language_embeddings_dim and langs:
+            root_shape = embeddings_with_root.shape
+            seq_size = root_shape[1]
+            lang_embeddings_for_batch = get_lang_embeddings(langs, seq_size)
+            return torch.cat((embeddings_with_root, lang_embeddings_for_batch), 2)  # concat along the last dimension
 
         return embeddings_with_root
 

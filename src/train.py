@@ -64,16 +64,16 @@ def evaluate_best_trained_model(trainer, config, eval_mode="basic"):
                 continue
             test_data_path = test_dir / fname
             print(f'<<<<< TEST FOR LANGUAGE {lang} >>>>>')
-            run_test(test_data_path, trainer, logger, eval_mode)
+            run_test(test_data_path, trainer, logger, eval_mode, lang)
     else:
         test_data_path = config["data_loaders"]["paths"]["test"]
         run_test(test_data_path, trainer, logger, eval_mode)
 
 
-def run_test(test_data_path, trainer, logger, eval_mode):
+def run_test(test_data_path, trainer, logger, eval_mode, lang=None):
     with open(test_data_path, "r") as gold_test_file, \
          open("test-parsed.conllu", "w") as output_file:
-        parse_corpus(config, gold_test_file, output_file, parser=trainer.parser)
+        parse_corpus(config, gold_test_file, output_file, parser=trainer.parser, lang=lang)
         output_file = reset_file(output_file, "test-parsed.conllu")
         gold_test_file = reset_file(gold_test_file, test_data_path)
         test_evaluation = run_evaluation(gold_test_file, output_file, mode=eval_mode)

@@ -60,16 +60,19 @@ class MultiParser(nn.Module):
         if isinstance(sentence, AnnotatedSentence):
             tokens = sentence.tokens[1:]  # Omit [root] token
             multiword_tokens = sentence.multiword_tokens
+            lang = sentence.lang
         elif isinstance(sentence, str):
             tokens = sentence.split(" ")
             multiword_tokens = None
+            # TODO: lang
+            lang = None
         else:
             raise Exception("Sentence must be either whitespace-tokenized string or DependencyAnnotatedSentence!")
         singleton_batch = [tokens]
 
         # Ensure eval mode and compute logits, labels
         self.eval()
-        logits, labels = self._compute_logits_and_labels(singleton_batch)
+        logits, labels = self._compute_logits_and_labels(singleton_batch, [lang])
 
         # Squeeze to get rid of dummy batch dimension
         logits = {outp_id: torch.squeeze(logits[outp_id], dim=0) for outp_id in logits}
@@ -100,7 +103,8 @@ class MultiParser(nn.Module):
         """
         # Create token batch and compute logits
         sent_batch = [sent.tokens_no_root() for sent in gold_sentences]
-        logits, labels = self._compute_logits_and_labels(sent_batch)
+        batch_langs = [sent.lang for sent in gold_sentences]
+        logits, labels = self._compute_logits_and_labels(sent_batch, batch_langs)
 
         # Iterate over the sentences in the batch and compute eval metrics for each
         batch_metrics = {outp_id: {"predicted": 0, "gold": 0, "correct": 0} for outp_id in self.outputs}
@@ -123,13 +127,13 @@ class MultiParser(nn.Module):
 
         return logits, batch_metrics
 
-    def _compute_logits_and_labels(self, input_sents):
+    def _compute_logits_and_labels(self, input_sents, batch_langs):
         """For the given batch of sentences (provided as a list of lists of tokens), compute logits and labels
         for each output/annotation ID by first running the embeddings processor and then the individual output modules.
         The output modules also handle the conversion from logits to labels (argmax).
         """
         # Get token embeddings
-        embeddings, true_seq_lengths = self.embed(input_sents)
+        embeddings, true_seq_lengths = self.embed(input_sents, batch_langs)
 
         # Run the output modules on the embeddings
         logits = dict()

@@ -9,4 +9,5 @@ dependencies:
     - mlflow
     - stanza
     - pyconll
+    - lang2vec
 

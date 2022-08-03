@@ -46,7 +46,8 @@ def parse_corpus_sents(config, corpus_file, output):
         #    parsed_sentence.annotation_data[col] = sentence[col]
         # print(parsed_sentence.to_conll(column_mapping), file=output)
 
-def parse_corpus(config, corpus_file, output, parser=None, keep_columns=None):
+
+def parse_corpus(config, corpus_file, output, parser=None, keep_columns=None, lang=None):
     """Parse each sentence of a CoNLL-format input corpus, writing to the specified output file/stream. Can pass either
     a config (in which the parser to be evaluated will be initialized from this config) or a MultiParser object
     directly.
@@ -70,7 +71,7 @@ def parse_corpus(config, corpus_file, output, parser=None, keep_columns=None):
             annotation_layers[col] = {"type": "TagSequence", "source_column": col}
     column_mapping = {annotation_id: annotation_layer["source_column"] for annotation_id, annotation_layer in annotation_layers.items()}
 
-    dataset = CustomCoNLLDataset.from_corpus_file(corpus_file, annotation_layers)
+    dataset = CustomCoNLLDataset.from_corpus_file(corpus_file, annotation_layers, lang=lang)
     for sentence in dataset:
         parsed_sentence = parser.parse(sentence)
         for col in keep_columns or []:  # Copy over columns to keep from input corpus

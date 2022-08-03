@@ -90,14 +90,14 @@ class CustomCoNLLDataset(Dataset):
             for i, raw_conll_sent in enumerate(iterator):
                 if samples_per_lang and i >= samples_per_lang:
                     break
-                processed_sent = AnnotatedSentence.from_conll(raw_conll_sent, annotation_layers, keep_traces=keep_traces)
+                processed_sent = AnnotatedSentence.from_conll(raw_conll_sent, annotation_layers, keep_traces=keep_traces, lang=lang)
                 if len(processed_sent) <= max_sent_len:
                     dataset.append_sentence(processed_sent, lang)
 
         return dataset
 
     @staticmethod
-    def from_corpus_file(corpus_filename, annotation_layers, max_sent_len=inf, keep_traces=False, subset_size=None):
+    def from_corpus_file(corpus_filename, annotation_layers, max_sent_len=inf, keep_traces=False, subset_size=None, lang=None):
         """Read in a dataset from a corpus file in CoNLL format.
 
         Args:
@@ -114,7 +114,7 @@ class CustomCoNLLDataset(Dataset):
 
         iterator = _iter_conll_sentences(corpus_filename)
         for i, raw_conll_sent in enumerate(iterator):
-            processed_sent = AnnotatedSentence.from_conll(raw_conll_sent, annotation_layers, keep_traces=keep_traces)
+            processed_sent = AnnotatedSentence.from_conll(raw_conll_sent, annotation_layers, keep_traces=keep_traces, lang=lang)
             if len(processed_sent) <= max_sent_len:
                 dataset.append_sentence(processed_sent)
 

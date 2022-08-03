@@ -132,7 +132,7 @@ class ConfigParser:
         if self.saving:
             embeddings_processor.save_transformer_config(self.save_dir)
 
-        embeddings_dim = embeddings_processor.embedding_dim
+        embeddings_dim = embeddings_processor.embedding_dim + (embeddings_processor.language_embeddings_dim or 0)
 
         model_outputs = self._init_outputs(model_args["outputs"], embeddings_dim)
 

@@ -26,7 +26,7 @@ class AnnotatedSentence:
        it treats them completely identically to normal tokens and consequently forgets about their special ID.
     """
 
-    def __init__(self, tokens, annotation_data, multiword_tokens=None):
+    def __init__(self, tokens, annotation_data, multiword_tokens=None, lang=None):
         """
         Args:
             tokens: List of strings containing the tokens of the sentence.
@@ -35,7 +35,9 @@ class AnnotatedSentence:
             multiword_tokens: Optional; Dictionary mapping sentence indices to multiword tokens occurring at these
                 indices, specified as tuples `(token_id, token_form)`. Multiword tokens are printed out at the correct
                 positions when outputting the sentence in CoNLL format, but do not affect anything else.
+            lang: language id
         """
+        self.lang = lang
         self.tokens = tokens
         assert self.tokens[0] == "[root]"
 
@@ -91,7 +93,7 @@ class AnnotatedSentence:
         return self.annotation_data[item]
 
     @staticmethod
-    def from_conll(conll_lines, annotation_layers, keep_traces=False):
+    def from_conll(conll_lines, annotation_layers, keep_traces=False, lang=None):
         """Create an AnnotatedSentence from a list of CoNLL lines. A `[root]` token will be added to the
         beginning of the sentence.
 
@@ -151,7 +153,7 @@ class AnnotatedSentence:
             else:
                 assert False
 
-        return AnnotatedSentence(tokens, annotation_data, multiword_tokens)
+        return AnnotatedSentence(tokens, annotation_data, multiword_tokens, lang=lang)
 
     @staticmethod
     def from_tensors(tokens, label_tensors, label_vocabs, annotation_types, multiword_tokens=None):
