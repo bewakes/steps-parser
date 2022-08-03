@@ -240,7 +240,7 @@ class Wrapper(nn.Module):
         if self.language_embeddings_dim and langs:
             root_shape = embeddings_with_root.shape
             seq_size = root_shape[1]
-            lang_embeddings_for_batch = get_lang_embeddings(langs, seq_size)
+            lang_embeddings_for_batch = get_lang_embeddings(langs, seq_size).to(embeddings_with_root.device)
             return torch.cat((embeddings_with_root, lang_embeddings_for_batch), 2)  # concat along the last dimension
 
         return embeddings_with_root
