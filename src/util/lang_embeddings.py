@@ -1,9 +1,18 @@
+import os
 import torch
 from lang2vec import lang2vec as l2v
+import pandas as pd
 
 LANGS_MAPS = {
     'np': 'nep'
 }
+EMBS_DIR = os.path.dirname(__file__)
+EMBS_FILE = os.path.join(EMBS_DIR, 'lang_features18.csv')
+
+df = pd.read_csv(EMBS_FILE)
+langs = df[df.columns[0]].values
+vals = df[df.columns[1:]].values
+LANGS_EMBS = {l: v for l, v in zip(langs, vals)}
 
 def memoize1(func):
     data = {}
@@ -25,7 +34,7 @@ def get_lang_embeddings(langs, seq_len: int):
 
 
 @memoize1
-def get_lang_embedding(langid: str):
+def get_lang_embedding_(langid: str):
     langid = LANGS_MAPS.get(langid, langid)
     feature_sets = ['syntax_average', 'phonology_average', 'inventory_average']
     emb = []
@@ -35,6 +44,9 @@ def get_lang_embedding(langid: str):
         emb.extend(fvec)
     return emb
 
+
+def get_lang_embedding(langid: str):
+    return LANGS_EMBS[langid]
 
 
 if __name__ == '__main__':
