@@ -82,3 +82,11 @@ MLAS       |      0.00 |      0.00 |      0.00
 BLEX       |      0.00 |      0.00 |      0.00
 uas_final_test: 57.53%
 las_final_test: 46.43%
+
+
+te 49.79
+hi 73.93
+sa 15.84
+mr 32.04
+ta 21.17
+np 46.43
