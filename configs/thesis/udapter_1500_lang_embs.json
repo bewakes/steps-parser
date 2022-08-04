@@ -16,7 +16,7 @@
                     "output_dropout": 0.5,
                     "scalar_mix_layer_dropout": 0.1,
                     "token_mask_prob": 0.15,
-                    "language_embeddings_dim": 289
+                    "language_embeddings_dim": 18
                 }
             },
 
@@ -100,7 +100,7 @@
             },
             "test_config": {
                 "multiple_langs": true,
-                "langs": ["ta", "te", "hi", "mr", "sa", "np"],
+                "langs": ["ta", "te", "mr", "sa", "np"],
                 "samples_per_lang": 1000
             }
         },
