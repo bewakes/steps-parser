@@ -1,5 +1,5 @@
 {
-    "experiment": "udapter_replication_1500_lang_embs",
+    "experiment": "udapter_replication_1500_lang_embs_18_dims",
     "name": "fact_mbert",
     "n_gpu": 1,
 
