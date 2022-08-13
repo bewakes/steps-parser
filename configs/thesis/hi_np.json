@@ -89,6 +89,7 @@
             "num_workers": 2,
             "train_config": {
                 "multiple_langs": true,
+                "samples_per_lang": 8000,
                 "langs": ["hi", "np"]
             },
             "dev_config": {
