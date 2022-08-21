@@ -1,0 +1,70 @@
+<<<<< TEST FOR LANGUAGE te >>>>>                                                                                                                                                       [12/1912]
+Metric     | Precision |    Recall |  F1 Score
+-----------+-----------+-----------+----------
+Lemmas     |    100.00 |    100.00 |    100.00
+UPOS       |      0.00 |      0.00 |      0.00
+XPOS       |      0.00 |      0.00 |      0.00
+UFeats     |     98.34 |     98.34 |     98.34
+UAS        |     71.43 |     71.43 |     71.43
+LAS        |     50.21 |     50.21 |     50.21
+CLAS       |     42.18 |     42.10 |     42.14
+MLAS       |      0.00 |      0.00 |      0.00
+BLEX       |     42.18 |     42.10 |     42.14
+uas_final_test: 71.43%
+las_final_test: 50.21%
+<<<<< TEST FOR LANGUAGE sa >>>>>
+Metric     | Precision |    Recall |  F1 Score
+-----------+-----------+-----------+----------
+Lemmas     |      0.05 |      0.05 |      0.05
+UPOS       |      0.00 |      0.00 |      0.00
+XPOS       |     99.95 |     99.95 |     99.95
+UFeats     |     29.57 |     29.57 |     29.57
+UAS        |     40.64 |     40.64 |     40.64
+LAS        |     16.55 |     16.55 |     16.55
+CLAS       |     14.19 |     13.75 |     13.97
+MLAS       |      0.00 |      0.00 |      0.00
+BLEX       |      0.00 |      0.00 |      0.00
+uas_final_test: 40.64%
+las_final_test: 16.55%
+<<<<< TEST FOR LANGUAGE mr >>>>>
+Metric     | Precision |    Recall |  F1 Score
+-----------+-----------+-----------+----------
+Lemmas     |      0.00 |      0.00 |      0.00
+UPOS       |      0.00 |      0.00 |      0.00
+XPOS       |    100.00 |    100.00 |    100.00
+UFeats     |     35.68 |     35.68 |     35.68
+UAS        |     44.42 |     44.42 |     44.42
+LAS        |     28.40 |     28.40 |     28.40
+CLAS       |     24.89 |     23.87 |     24.37
+MLAS       |      0.00 |      0.00 |      0.00
+BLEX       |      0.00 |      0.00 |      0.00
+uas_final_test: 44.42%
+las_final_test: 28.40%
+<<<<< TEST FOR LANGUAGE ta >>>>>
+Metric     | Precision |    Recall |  F1 Score
+-----------+-----------+-----------+----------
+Lemmas     |      0.00 |      0.00 |      0.00
+UPOS       |      0.00 |      0.00 |      0.00
+XPOS       |      0.00 |      0.00 |      0.00
+UFeats     |     29.91 |     29.91 |     29.91
+UAS        |     36.75 |     36.75 |     36.75
+LAS        |     15.08 |     15.08 |     15.08
+CLAS       |     12.89 |     15.01 |     13.87
+MLAS       |      0.00 |      0.00 |      0.00
+BLEX       |      0.00 |      0.00 |      0.00
+uas_final_test: 36.75%
+las_final_test: 15.08%
+<<<<< TEST FOR LANGUAGE np >>>>>
+Metric     | Precision |    Recall |  F1 Score
+-----------+-----------+-----------+----------
+Lemmas     |      0.00 |      0.00 |      0.00
+UPOS       |      0.00 |      0.00 |      0.00
+XPOS       |      0.00 |      0.00 |      0.00
+UFeats     |     26.89 |     26.89 |     26.89
+UAS        |     69.59 |     69.59 |     69.59
+LAS        |     60.79 |     60.79 |     60.79
+CLAS       |     52.56 |     56.97 |     54.68
+MLAS       |      0.00 |      0.00 |      0.00
+BLEX       |      0.00 |      0.00 |      0.00
+uas_final_test: 69.59%
+las_final_test: 60.79%
