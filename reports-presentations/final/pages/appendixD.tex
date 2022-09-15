@@ -1,0 +1,90 @@
+\chapter{Experiments and training times} \label{experiments_time_appendix}
+
+The above experiments were run for 100 epochs on training sets containing
+around 12000 to 15000 sentences, except for random training on the first row
+and the ones mentioning sample size.
+
+\subsubsection{Experiments without language embeddings}
+\begin{table}[ht]
+    \begin{center}
+        \begin{tabular}{|c|c|c|c|}
+            \hline
+            \textbf{Exp. code} & \textbf{Datasets} & \textbf{Embeddings ?} & \textbf{Time(hours)} \\
+            \hline
+            rand & Random weights & No & 0.2 \\
+            \hline
+            en2k & English 2k samples & No & 3 \\
+            \hline
+            en5k & English 5k samples & No & 5 \\
+            \hline
+            en & English & No & 12 \\
+            \hline
+            hi & Hindi & No & 15 \\
+            \hline
+            en\_hi & English, Hindi & No & 18 \\
+            \hline
+            multi & ar,en,eu,fi,he,hi,it,ja,ko,ru,sv,tr,zh & No & 18 \\
+            \hline
+            multi\_np20 & \textbf{np},ar,en,eu,fi,he,hi,it,ja,ko,ru,sv,tr,zh & No & 14 \\
+            \hline
+            \textbf{multi\_np100} & \textbf{np},ar,en,eu,fi,he,hi,it,ja,ko,ru,sv,tr,zh & No & 14 \\
+            \hline
+            hi\_np20 & \textbf{np},ar,en,eu,fi,he,hi,it,ja,ko,ru,sv,tr,zh & No & 12 \\
+            \hline
+            \textbf{hi\_np100} & \textbf{np},ar,en,eu,fi,he,hi,it,ja,ko,ru,sv,tr,zh & No & 12.5 \\
+            \hline
+            \textbf{np100} & \textbf{np} & No & 0.4 \\
+            \hline
+        \end{tabular}
+        \caption{Training duration without language embeddings}
+        \label{table:experiments_durations_noem}
+    \end{center}
+\end{table}
+
+\subsubsection{Experiments with language embeddings}
+\begin{table}[ht]
+    \begin{center}
+        \begin{tabular}{|c|c|c|c|}
+            \hline
+            \textbf{Exp. code} & \textbf{Datasets} & \textbf{Embeddings ?} & \textbf{Time(hours)} \\
+            \hline
+            en2kem & English 2k samples & Yes & 5 \\
+            \hline
+            en5kem & English 5k samples & Yes & 7 \\
+            \hline
+            enem & English & Yes & 15 \\
+            \hline
+            hiem & Hindi & Yes & 18 \\
+            \hline
+            en\_hi\_em & English, Hindi & Yes & 21 \\
+            \hline
+            multiem & ar,en,eu,fi,he,hi,it,ja,ko,ru,sv,tr,zh & Yes & 21 \\
+            \hline
+            \textbf{multi\_np20\_em} & \textbf{np},ar,en,eu,fi,he,hi,it,ja,ko,ru,sv,tr,zh & Yes & 16 \\
+            \hline
+        \end{tabular}
+        \caption{Training duration with language embeddings}
+        \label{table:experiments_durations_em}
+    \end{center}
+\end{table}
+The training times for \textit{en\_hi} and \textit{multi} are slightly higher
+because for \textit{en\_hi} almost all of the data(10000 sentences for English
+and 12000 for Hindi) were used. Similarly, for \textit{multi} setup, 1500
+sentences for each language were used. For other multi setups only 1000
+sentences from source languages were used for training.
+
+\subsubsection{Experiments time summary}
+\begin{table}[ht]
+    \begin{center}
+        \begin{tabular}{|l|c|}
+            \hline
+            \textbf{Total Training duration} & ~228 hrs \\
+            \hline
+            \textbf{Average Training duration} & ~13 hrs \\
+            \hline
+            \textbf{Total experiments} & 19 \\
+            \hline
+        \end{tabular}
+    \end{center}
+\end{table}
+

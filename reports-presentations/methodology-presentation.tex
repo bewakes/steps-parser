@@ -1,0 +1,145 @@
+\documentclass{beamer}
+
+\usefonttheme{serif} % default family is serif
+\usepackage{fontspec}
+\usepackage{braket}
+\usepackage{amsmath}
+\usepackage{amssymb}
+
+
+\title{Dependency Parser for Nepali: Methodology Elaboration}
+\author{Bibek Pandey}
+\institute{076MSCSK003}
+\date{June, 2022}
+
+\newcommand{\V}[1]{\textbf{#1}}
+\newcommand{\nn}{\\~\\}
+
+\begin{document}
+
+\begin{frame}
+\titlepage
+\end{frame}
+
+\begin{frame}
+\frametitle{}
+\huge\textbf{Multilingual Embeddings}
+\end{frame}
+
+\begin{frame}
+\frametitle{General Idea}
+\begin{itemize}
+\item Predefined fastText embeddings for English($E^{en}$), Hindi($E^{hi}$) and Nepali($E^{np}$).
+\item Create multilingual embeddings using a method called MultiCCA.
+\item Use English embedding space as multilingual embeddings space.
+\item For each pair with English, create two projection matrices to project to common space for each pair: $T_{hi \rightarrow hi,en}, T_{en \rightarrow hi,en}$ and $T_{np \rightarrow np,en}, T_{en \rightarrow np,en}$
+\item Define multilingual embeddings as:
+    $$E_{CCA}(np, word) = T_{en \rightarrow np,en}^{-1}T_{np \rightarrow np,en}E^{np}(word)$$
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Cannonical Correlation Analysis(CCA)}
+Let $\Sigma \in \mathbb{R}^{n_1 \times d_1}$ and $\Omega \in \mathbb{R}^{n_2 \times d_2}$ be vector space embeddings of two different vocabularies.
+\nn
+Let $\Sigma' \subset \Sigma$ and $\Omega' \subset \Omega$ be the embeddings which have some mappings either using bilingual dictionary or using a parallel corpus.
+\nn
+Let $x \in \Sigma'$ and $y \in \Omega'$ be two vectors and, $v$ and $w$ be two projection directions that project embeddings from each language to a common space.
+\nn
+Now, projected vectors are $x' = xv, y' = yw$. \\
+Correlation between projected vectors
+$$\rho(x', y') = \frac{E[x'y']}{\sqrt{E[x'^2]E[y'^2]}} $$
+\end{frame}
+
+\begin{frame}
+\frametitle{Cannonical Corrleation Analysis(CCA)}
+Then, the required projection matrices $v$ and $w$ are given as,
+\begin{equation}
+\begin{aligned}
+(v, w) &= CCA(x, y) \\
+&= \underset{v, w}{argmax} \; \rho(xv, yw)
+\end{aligned}
+\end{equation}
+\end{frame}
+
+\begin{frame}
+\frametitle{}
+\huge\textbf{Multilingual Brown Clusters}
+\end{frame}
+
+\begin{frame}
+\frametitle{Multilingual Brown Clusters}
+\begin{itemize}
+    \item Assigns unique ID to each words group based on their co-occurences in corpus.
+    \item First create English brown clusters from Open American National Corpus(11 million words)
+    \item Using the Multilingual embeddings, for each cluster average the embedding vectors to obtain vector representation for each cluster.
+    \item For Nepali and Hindi, use the multilingual embeddings and cosine similarity to obtain corresponding cluster vector.
+    \item For OOV(Out of Vocabulary) words, the cluster representation is the average of all cluster vectors.
+    \item English Corpus Source: https://anc.org/data/oanc/download/
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{}
+{\huge\textbf{Language Embeddings}}
+\nn
+These are just one-hot encodings of the languages. The dimension is 3x1.
+\end{frame}
+
+\begin{frame}
+\frametitle{}
+{\huge\textbf{Token Embeddings}}
+\nn
+The multilingual embeddings, Brown cluster embeddings and language embeddings are concatenated and fed into the neural network.
+\end{frame}
+
+\begin{frame}
+\frametitle{}
+\huge\textbf{BiLSTM Representation}
+\end{frame}
+
+\begin{frame}
+\frametitle{}
+\huge\textbf{MLPs as Loss Functions}
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Novelty}
+\begin{itemize}
+    \item Use of multilingual BERT embeddings along with language embeddings and brown clusters for token representation.
+    \item Using that token representation with BiLSTM-based architecture proposed by Kiperwasser(2016).
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{}
+\huge\textbf{Justifications}
+\end{frame}
+
+\begin{frame}
+\frametitle{Justifications}
+\begin{itemize}
+    \item \textbf{Transition Based System}: When contextualized embeddings are used, accuracy of both graph-based and transition-based parsers is virtually equivalent.[Kulmizev et al. 2019].
+    \item \textbf{BERT embeddings}: It is a contextualized embedding which has been shown to be effective in various NLP tasks and contextualized embeddings are almost a standard now. Also studies have shown that implicit syntactic information is captured in BERT[Manning 2019].
+    \item \textbf{Language embeddings}: With a hope to capture directional relations in sentences of different languages.
+    \item \textbf{Brown Clusters}:
+    \item \textbf{BiLSTM}:
+    \item \textbf{MLP}: To have a non-linear function that evaluates the performance.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{}
+\huge\textbf{References}
+\end{frame}
+
+
+\begin{frame}
+\frametitle{References}
+\begin{itemize}
+    \item Improving Vector Space Word Representations Using Multilingual Correlation. \url{https://www.manaalfaruqui.com/papers/eacl14-vectors.pdf}
+    \item Deep Contextualized Word Embeddings in Transition-Based and Graph-Based Dependency Parsing – A Tale of Two Parsers Revisited \url{https://aclanthology.org/D19-1277v1.pdf}
+    \item A structural probe for finding syntax in word representations. Manning et al. 2019
+\end{itemize}
+\end{frame}
