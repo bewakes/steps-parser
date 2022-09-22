@@ -1,4 +1,4 @@
-\chapter{Annotated sentences samples} \label{dataset_summary_sample_appendix}
+\section{Annotated sentences samples} \label{dataset_summary_sample_appendix}
 
 The following are 100 out of 200 annotated sentences created. Note that the
 underscores(\_) represents the dummy token for the tokens that could not be perfectly aligned. For example:
@@ -15,27 +15,29 @@ Table \ref{table:sample_annotation1}\\
 \textbf{Nepali:} \dev{कुशीनगर को महत्व महापरिनिर्वाण मन्दिर बाट हो ।}\\
 \begin{table}[ht]
     \begin{center}
-        \begin{tabular}{|c|c|c|c|c|c|c|c|}
+        \scalebox{0.82}{
+        \begin{tabular}{|c|c|c|c|c|c|c|}
             \hline
-            \textbf{\tiny{Index}} & \textbf{\tiny{Token}} & \textbf{\tiny{Lemma}} & \textbf{\tiny{UPOS}} & \textbf{\tiny{XPOS}} & \textbf{\tiny{Feats}} & \textbf{\tiny{Head}} & \textbf{\tiny{Label}} \\
+            \textbf{\tiny{Index}} & \textbf{\tiny{Token}} & \textbf{\tiny{Lemma}} & \textbf{\tiny{UPOS}} & \textbf{\tiny{XPOS}} & \textbf{\tiny{Head}} & \textbf{\tiny{Label}} \\
             \hline
-            1 & \scriptsize{\dev{कुशीनगर}} & \scriptsize{\dev{कुशीनगर}} & \scriptsize{PROPN} & \scriptsize{NNP} & \tiny{Case=Acc|Gender=Masc|Number=Sing|Person=3} & 3 & \scriptsize{nmod} \\
+            1 & \scriptsize{\dev{कुशीनगर}} & \scriptsize{\dev{कुशीनगर}} & \scriptsize{PROPN} & \scriptsize{NNP} & 3 & \scriptsize{nmod} \\
             \hline
-            2 & \scriptsize{\dev{को}} & \scriptsize{\dev{का}} & \scriptsize{ADP} & \scriptsize{PSP} & \tiny{AdpType=Post|Case=Nom|Gender=Masc|Number=Sing} & 1 & \scriptsize{case} \\
+            2 & \scriptsize{\dev{को}} & \scriptsize{\dev{का}} & \scriptsize{ADP} & \scriptsize{PSP} & 1 & \scriptsize{case} \\
             \hline
-            3 & \scriptsize{\dev{महत्व}} & \scriptsize{\dev{महत्व}} & \scriptsize{NOUN} & \scriptsize{NN} & \tiny{Case=Nom|Gender=Masc|Number=Sing|Person=3} & 5 & \scriptsize{nsubj} \\
+            3 & \scriptsize{\dev{महत्व}} & \scriptsize{\dev{महत्व}} & \scriptsize{NOUN} & \scriptsize{NN} & 5 & \scriptsize{nsubj} \\
             \hline
-            4 & \scriptsize{\dev{महापरिनिर्वाण}} & \scriptsize{\dev{महापरिनिर्वाण}} & \scriptsize{PROPN} & \scriptsize{NNPC} & \tiny{Case=Nom|Gender=Masc|Number=Sing|Person=3} & 5 & \scriptsize{compound} \\
+            4 & \scriptsize{\dev{महापरिनिर्वाण}} & \scriptsize{\dev{महापरिनिर्वाण}} & \scriptsize{PROPN} & \scriptsize{NNPC} & 5 & \scriptsize{compound} \\
             \hline
-            5 & \scriptsize{\dev{मन्दिर}} & \scriptsize{\dev{मंदिर}} & \scriptsize{PROPN} & \scriptsize{NNP} & \tiny{Case=Acc|Gender=Masc|Number=Sing|Person=3} & 0 & \scriptsize{root} \\
+            5 & \scriptsize{\dev{मन्दिर}} & \scriptsize{\dev{मंदिर}} & \scriptsize{PROPN} & \scriptsize{NNP} & 0 & \scriptsize{root} \\
             \hline
-            6 & \scriptsize{\dev{बाट}} & \scriptsize{\dev{से}} & \scriptsize{ADP} & \scriptsize{PSP} & \tiny{AdpType=Post} & 5 & \scriptsize{case} \\
+            6 & \scriptsize{\dev{बाट}} & \scriptsize{\dev{से}} & \scriptsize{ADP} & \scriptsize{PSP} & 5 & \scriptsize{case} \\
             \hline
-            7 & \scriptsize{\dev{हो}} & \scriptsize{\dev{है}} & \scriptsize{AUX} & \scriptsize{VM} & \tiny{Mood=Ind|Number=Sing|Person=3|Tense=Pres|VerbForm=Fin} & 5 & \scriptsize{cop} \\
+            7 & \scriptsize{\dev{हो}} & \scriptsize{\dev{है}} & \scriptsize{AUX} & \scriptsize{VM} & 5 & \scriptsize{cop} \\
             \hline
-            8 & \scriptsize{\dev{।}} & \scriptsize{\dev{।}} & \scriptsize{PUNCT} & \scriptsize{SYM} & \tiny{\_} & 5 & \scriptsize{punct} \\
+            8 & \scriptsize{\dev{।}} & \scriptsize{\dev{।}} & \scriptsize{PUNCT} & \scriptsize{SYM} & 5 & \scriptsize{punct} \\
             \hline
         \end{tabular}
+        }
         \caption{Annotation for Sample sentence 1}
         \label{table:sample_annotation1}
     \end{center}

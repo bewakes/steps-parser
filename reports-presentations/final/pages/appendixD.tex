@@ -1,4 +1,4 @@
-\chapter{Experiments and training times} \label{experiments_time_appendix}
+\section{Experiments and training times} \label{experiments_time_appendix}
 
 The above experiments were run for 100 epochs on training sets containing
 around 12000 to 15000 sentences, except for random training on the first row
@@ -7,9 +7,10 @@ and the ones mentioning sample size.
 \subsubsection{Experiments without language embeddings}
 \begin{table}[ht]
     \begin{center}
+        \scalebox{0.9}{
         \begin{tabular}{|c|c|c|c|}
             \hline
-            \textbf{Exp. code} & \textbf{Datasets} & \textbf{Embeddings ?} & \textbf{Time(hours)} \\
+            \textbf{Exp. code} & \textbf{Datasets} & \textbf{Embs?} & \textbf{Time(hrs)} \\
             \hline
             rand & Random weights & No & 0.2 \\
             \hline
@@ -23,19 +24,20 @@ and the ones mentioning sample size.
             \hline
             en\_hi & English, Hindi & No & 18 \\
             \hline
-            multi & ar,en,eu,fi,he,hi,it,ja,ko,ru,sv,tr,zh & No & 18 \\
+            multi & multi & No & 18 \\
             \hline
-            multi\_np20 & \textbf{np},ar,en,eu,fi,he,hi,it,ja,ko,ru,sv,tr,zh & No & 14 \\
+            multi\_np20 & \textbf{np},multi & No & 14 \\
             \hline
-            \textbf{multi\_np100} & \textbf{np},ar,en,eu,fi,he,hi,it,ja,ko,ru,sv,tr,zh & No & 14 \\
+            \textbf{multi\_np100} & \textbf{np},multi & No & 14 \\
             \hline
-            hi\_np20 & \textbf{np},ar,en,eu,fi,he,hi,it,ja,ko,ru,sv,tr,zh & No & 12 \\
+            hi\_np20 & \textbf{np},multi & No & 12 \\
             \hline
-            \textbf{hi\_np100} & \textbf{np},ar,en,eu,fi,he,hi,it,ja,ko,ru,sv,tr,zh & No & 12.5 \\
+            \textbf{hi\_np100} & \textbf{np},multi & No & 12.5 \\
             \hline
             \textbf{np100} & \textbf{np} & No & 0.4 \\
             \hline
         \end{tabular}
+        }
         \caption{Training duration without language embeddings}
         \label{table:experiments_durations_noem}
     \end{center}
@@ -44,9 +46,10 @@ and the ones mentioning sample size.
 \subsubsection{Experiments with language embeddings}
 \begin{table}[ht]
     \begin{center}
+        \scalebox{0.85}{
         \begin{tabular}{|c|c|c|c|}
             \hline
-            \textbf{Exp. code} & \textbf{Datasets} & \textbf{Embeddings ?} & \textbf{Time(hours)} \\
+            \textbf{Exp. code} & \textbf{Datasets} & \textbf{Embs?} & \textbf{Time(hrs)} \\
             \hline
             en2kem & English 2k samples & Yes & 5 \\
             \hline
@@ -58,11 +61,12 @@ and the ones mentioning sample size.
             \hline
             en\_hi\_em & English, Hindi & Yes & 21 \\
             \hline
-            multiem & ar,en,eu,fi,he,hi,it,ja,ko,ru,sv,tr,zh & Yes & 21 \\
+            multiem & multi & Yes & 21 \\
             \hline
-            \textbf{multi\_np20\_em} & \textbf{np},ar,en,eu,fi,he,hi,it,ja,ko,ru,sv,tr,zh & Yes & 16 \\
+            \textbf{multi\_np20\_em} & \textbf{np},multi & Yes & 16 \\
             \hline
         \end{tabular}
+    }
         \caption{Training duration with language embeddings}
         \label{table:experiments_durations_em}
     \end{center}
@@ -87,4 +91,231 @@ sentences from source languages were used for training.
         \end{tabular}
     \end{center}
 \end{table}
+
+\section{Annotated sentences samples} \label{dataset_summary_sample_appendix}
+
+The following are 100 out of 200 annotated sentences created. Note that the
+underscores(\_) represents the dummy token for the tokens that could not be perfectly aligned. For example:
+\begin{itemize}
+    \item For verbs like: \dev{करता है} whose translation is \dev{गर्दछ \_}
+    \item For adjective phrases like: \dev{बड़ा सा} whose translation is \dev{ठुलो \_}
+\end{itemize}
+
+
+The following consist of a Hindi sentence, translated Nepali sentence and the
+corresponding annotated data. And the tabulation of annotations is shown in
+Table \ref{table:sample_annotation1}\\
+\textbf{Hindi:} \dev{कुशीनगर का महत्‍व महापरिनिर्वाण मंदिर से है ।}\\
+\textbf{Nepali:} \dev{कुशीनगर को महत्व महापरिनिर्वाण मन्दिर बाट हो ।}\\
+\begin{table}[ht]
+    \begin{center}
+        \scalebox{0.82}{
+        \begin{tabular}{|c|c|c|c|c|c|c|}
+            \hline
+            \textbf{\tiny{Index}} & \textbf{\tiny{Token}} & \textbf{\tiny{Lemma}} & \textbf{\tiny{UPOS}} & \textbf{\tiny{XPOS}} & \textbf{\tiny{Head}} & \textbf{\tiny{Label}} \\
+            \hline
+            1 & \scriptsize{\dev{कुशीनगर}} & \scriptsize{\dev{कुशीनगर}} & \scriptsize{PROPN} & \scriptsize{NNP} & 3 & \scriptsize{nmod} \\
+            \hline
+            2 & \scriptsize{\dev{को}} & \scriptsize{\dev{का}} & \scriptsize{ADP} & \scriptsize{PSP} & 1 & \scriptsize{case} \\
+            \hline
+            3 & \scriptsize{\dev{महत्व}} & \scriptsize{\dev{महत्व}} & \scriptsize{NOUN} & \scriptsize{NN} & 5 & \scriptsize{nsubj} \\
+            \hline
+            4 & \scriptsize{\dev{महापरिनिर्वाण}} & \scriptsize{\dev{महापरिनिर्वाण}} & \scriptsize{PROPN} & \scriptsize{NNPC} & 5 & \scriptsize{compound} \\
+            \hline
+            5 & \scriptsize{\dev{मन्दिर}} & \scriptsize{\dev{मंदिर}} & \scriptsize{PROPN} & \scriptsize{NNP} & 0 & \scriptsize{root} \\
+            \hline
+            6 & \scriptsize{\dev{बाट}} & \scriptsize{\dev{से}} & \scriptsize{ADP} & \scriptsize{PSP} & 5 & \scriptsize{case} \\
+            \hline
+            7 & \scriptsize{\dev{हो}} & \scriptsize{\dev{है}} & \scriptsize{AUX} & \scriptsize{VM} & 5 & \scriptsize{cop} \\
+            \hline
+            8 & \scriptsize{\dev{।}} & \scriptsize{\dev{।}} & \scriptsize{PUNCT} & \scriptsize{SYM} & 5 & \scriptsize{punct} \\
+            \hline
+        \end{tabular}
+        }
+        \caption{Annotation for Sample sentence 1}
+        \label{table:sample_annotation1}
+    \end{center}
+\end{table}
+
+
+\subsubsection{Sentences}
+Some of the translated nepali sentences are:
+\begin{itemize}
+    \item[1.] \dev{रामायण काल मा भगवान राम का छोरा कुश को राजधानी कुशावती लाई 483 ईसा पूर्व बुद्ध ले आफ्नो अन्तिम विश्राम को लागि चुने ।}
+
+    \item[2.] \dev{मल्लहरू को राजधानी भए को कारण प्राचीनकाल मा यस स्थान को ठूलो महत्व थियो ।}
+
+    \item[3.]\dev{हिन्दू राजाहरू को काल मा चीन बाट ह्युएन त्साङ , फाहियन र इट्सिङ ले आफ्नो यात्रा विवरण मा यस ठाउँ को महिमा को वर्णन गरेका छन् ।}
+
+    \item[4.]\dev{कुशीनगर को सबैभन्दा ठूलो महत्त्व बौद्ध तीर्थ का रूप मा छ ।}
+
+    \item[5.]\dev{कुशीनगर को सीमा मा प्रवेश गर्दा बित्तिकै भव्य प्रवेशद्वार तपाईंको स्वागत गर्दछ \_ ।}
+
+    \item[6.]\dev{कुशीनगर को महत्व महापरिनिर्वाण मन्दिर बाट हो ।}
+
+    \item[7.]\dev{यस मन्दिर को वास्तुकला अजन्ता को गुफा बाट प्रेरित छ ।}
+
+    \item[8.]\dev{यो मन्दिर त्यही ठाउँ मा निर्माण गरिएको हो , जहाँ बाट यो मूर्ति निकालिएको \_ थियो ।}
+
+    \item[9.]\dev{मन्दिर को पूर्व भाग मा एउटा स्तूप छ ।}
+
+    \item[10.]\dev{यहाँ \_ भगवान बुद्ध को अंतिम दाहसंस्कार गरिएको \_ थियो ।}
+
+    \item[11.]\dev{मूर्ति पनि अजन्ता को भगवान बुद्ध को महापरिनिर्वाण मूर्ति को प्रतिकृति हो ।}
+
+    \item[12.]\dev{वैसे मूर्ति को अवधि अजन्ता भन्दा पहिले को हो ।}
+
+    \item[13.]\dev{यस मन्दिर को वरिपरि धेरै विहारहरू ( जहाँ बौद्ध भिक्षुहरू बस्ने गर्दथे \_ ) र चैत्यहरू ( जहाँ भिक्षुहरू पूजा गर्थे \_ वा ध्यान लगाउँथे \_ ) भग्नावशेषहरू र खंडहर रहेका छन् जुन अशोककालीन भन्ने गरिन्छ \_ ।}
+\end{itemize}
+
+\section{Universal Dependencies Labels} \label{ud_labels}
+\begin{table}[ht]
+    \begin{center}
+        \scalebox{0.8}{
+\begin{tabular}{|c|c|}
+            \hline
+            \textbf{Label} & \textbf{Meaning} \\
+            \hline
+            acl & Clausal Modifier Of Noun (Adnominal Clause) \\
+            \hline
+            advcl & Adverbial Clause Modifier \\
+            \hline
+            advmod & Adverbial Modifier \\
+            \hline
+            amod & Adjectival Modifier \\
+            \hline
+            appos & Appositional Modifier \\
+            \hline
+            aux & Auxiliary \\
+            \hline
+            case & Case Marking \\
+            \hline
+            cc & Coordinating Conjunction \\
+            \hline
+            ccomp & Clausal Complement \\
+            \hline
+            clf & Classifier \\
+            \hline
+            compound & Compound \\
+            \hline
+            conj & Conjunct \\
+            \hline
+            cop & Copula \\
+            \hline
+            csubj & Clausal Subject \\
+            \hline
+            dep & Unspecified Dependency \\
+            \hline
+            det & Determiner \\
+            \hline
+            discourse & Discourse Element \\
+            \hline
+            dislocated & Dislocated Elements \\
+            \hline
+            expl & Expletive \\
+            \hline
+            fixed & Fixed Multiword Expression \\
+            \hline
+            flat & Flat Multiword Expression \\
+            \hline
+            goeswith & Goes With \\
+            \hline
+            iobj & Indirect Object \\
+            \hline
+            list & List \\
+            \hline
+            mark & Marker \\
+            \hline
+            nmod & Nominal Modifier \\
+            \hline
+            nsubj & Nominal Subject \\
+            \hline
+            nummod & Numeric Modifier \\
+            \hline
+            obj & Object \\
+            \hline
+            obl & Oblique Nominal \\
+            \hline
+            orphan & Orphan \\
+            \hline
+            parataxis & Parataxis \\
+            \hline
+            punct & Punctuation \\
+            \hline
+            reparandum & Overridden Disfluency \\
+            \hline
+            root & Root \\
+            \hline
+            vocative & Vocative \\
+            \hline
+            xcomp & Open Clausal Complement \\
+            \hline
+        \end{tabular}
+        }
+        \caption{Arc labels and the meanings}
+        \label{table:label_meanings}
+    \end{center}
+\end{table}
+
+\section{Translation Information} \label{translation}
+Some information about the human validator is tabulated below:
+\begin{table}[ht]
+    \begin{center}
+        \begin{tabular}{|l|c|}
+            \hline
+            Age & 26 \\
+            \hline
+            Education & M.Sc. \\
+            \hline
+            Mother tongue & Nepali \\
+            \hline
+            Hindi proficiency & Fluent \\
+            \hline
+        \end{tabular}
+        \caption{Validator Description}
+        \label{table:validator_description}
+    \end{center}
+\end{table}
+
+The following are all the errors reported by the validator: \\
+\dev{ महानियंत्रक -> नियन्त्रक }\\
+\dev{ लेखा -> महालेखा }\\
+\dev{ पर -> को }\\
+\dev{ उपाध्यक्ष -> उपसभामुख }\\
+\dev{ किया -> गरेको }\\
+\dev{ सत्ता -> अख्तियार }\\
+\dev{ 19,401 -> 233 }\\
+\dev{ आदिवासी -> जनजाति }\\
+\dev{ उनकी -> आफ्नो }\\
+\dev{ से -> ले }\\
+\dev{ पश्चिमी -> पश्चिमाञ्चल }\\
+\dev{ वह -> उनी }\\
+\dev{ के -> को }\\
+\dev{ आया -> आए }\\
+\dev{ तरह -> तरिक }\\
+\dev{ जीडीपी -> उत्पादन }\\
+\dev{ २६.४ -> 26 }\\
+\dev{ उपाध्यक्ष -> उपराष्ट्रपति }\\
+\dev{ राजद -> आरजेडी }\\
+\dev{ अध्यक्ष -> राष्ट्रपति }\\
+\dev{ सामने -> नजिक }\\
+\dev{ तो -> त्यसोभए }\\
+\dev{ वाली -> वल }\\
+\dev{ कंपनियां -> प्रदायकहरू }\\
+\dev{ इस -> यसो }\\
+\dev{ प्रचार -> प्रवर्द्धन }\\
+\dev{ प्राधिकरण -> अख्तियार }\\
+\dev{ रुख -> अडान }\\
+\dev{ मानना -> मन्नु }\\
+\dev{ मिले -> पाउने }\\
+\dev{ अलावा -> बहेक }\\
+\dev{ किया -> गरेको }\\
+\dev{ वाले -> वल }\\
+\dev{ वाला -> वल }\\
+\dev{ है -> छैन }\\
+\dev{ रेलवे -> रेल }\\
+\dev{ के -> का }\\
+\dev{ आहुति -> बलिदान }\\
+\dev{ मातृकाएँ -> मातृ }\\
+\dev{ पहले -> अगदि }\\
 

@@ -1,4 +1,4 @@
-\chapter{Methodology}
+\section{Methodology}
 This work is an extension of a wonderful paper \textit{`Applying Occam's Razor
 to Transformer-Based Dependency Parsing: What works, What doesn't, and What is
 really necessary'}\cite{steps-parser}. The parser is named STEPS(Stuttgart
@@ -11,7 +11,7 @@ source language/size analysis, we parse Nepali sentences as a zero-shot case.
 
 \begin{figure}[!h]
     \center
-    \includegraphics[scale=0.3]{images/Thesis_Architecture}
+    \includegraphics[scale=0.15]{images/Thesis_Architecture}
     \caption{System Architecture}
     \label{system_architecture}
 \end{figure}
@@ -177,7 +177,7 @@ so that the transfer learning becomes efficient.
 
 \begin{figure}[!ht]
     \center
-    \includegraphics[scale=0.25]{images/ud_structure}
+    \includegraphics[scale=0.16]{images/ud_structure}
     \caption{Sample data in UD Treebank}
     \label{ud_structure}
 \end{figure}
@@ -185,7 +185,7 @@ so that the transfer learning becomes efficient.
 The dependency tree of an annotated sentence is shown in Figure \ref{dep_tree_example}
 \begin{figure}[!ht]
     \center
-    \includegraphics[scale=0.2]{images/nepali_dependency_parse}
+    \includegraphics[scale=0.15]{images/nepali_dependency_parse}
     \caption{Dependency tree for a sentence in dataset}
     \label{dep_tree_example}
 \end{figure}
@@ -252,7 +252,7 @@ translations is present in Appendix \ref{translation}.
 
 \begin{figure}[!h]
     \center
-    \includegraphics[scale=0.5]{images/dataset_histogram}
+    \includegraphics[scale=0.3]{images/dataset_histogram}
     \caption{Sentences - tokens count histogram}
     \label{tokens_count_histogram}
 \end{figure}
@@ -289,7 +289,7 @@ average of only about 150 sentences are used for testing purposes.
 \end{table}
 
 
-\chapter{Results and Analysis}
+\section{Results and Analysis}
 \section{Experiments and Results}
 All the datasets are used from UD treebank and the base implementation is by
 \cite{steps-parser} which has been modified to include language embeddings as
@@ -349,14 +349,14 @@ The \textbf{multi} languages are the languages mentioned in Table \ref{table:dat
 
 \begin{figure}[!h]
     \center
-    \includegraphics[scale=0.4]{images/results}
+    \includegraphics[scale=0.3]{images/results}
     \caption{Effects of language embeddings for zero-shot case}
     \label{results}
 \end{figure}
 
 \begin{figure}[!h]
     \center
-    \includegraphics[scale=0.5]{images/fewshot_comparison}
+    \includegraphics[scale=0.3]{images/fewshot_comparison}
     \caption{Comparison of fewshot experiments}
     \label{fewshot_comparison}
 \end{figure}
@@ -447,7 +447,7 @@ experiments are tabulated in Appendix \ref{experiments_time_appendix}.
     \caption{Sample parse of \dev{प्रधानमन्त्री ले भने कि उनी किसान लाई नि:शुल्क बिजुली दिनु को विरोधी हुन् ।}}
     \label{img:sample_result1}
 \end{figure}
-\chapter{Conclusions and Future Work}
+\section{Conclusions and Future Work}
 The most important part of any machine learning system is the dataset.
 In the case of Nepali dependency parsing, there have been no annotated
 dataset. Manual annotation is a time consuming and technical task
