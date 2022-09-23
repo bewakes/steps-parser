@@ -11,7 +11,7 @@ source language/size analysis, we parse Nepali sentences as a zero-shot case.
 
 \begin{figure}[!h]
     \center
-    \includegraphics[scale=0.3]{images/Thesis_Architecture}
+    \includegraphics[scale=0.25]{images/Thesis_Architecture}
     \caption{System Architecture}
     \label{system_architecture}
 \end{figure}
@@ -177,7 +177,7 @@ so that the transfer learning becomes efficient.
 
 \begin{figure}[!ht]
     \center
-    \includegraphics[scale=0.25]{images/ud_structure}
+    \includegraphics[trim={0 0 10cm 0},clip,scale=0.25]{images/ud_structure}
     \caption{Sample data in UD Treebank}
     \label{ud_structure}
 \end{figure}
@@ -185,7 +185,7 @@ so that the transfer learning becomes efficient.
 The dependency tree of an annotated sentence is shown in Figure \ref{dep_tree_example}
 \begin{figure}[!ht]
     \center
-    \includegraphics[scale=0.2]{images/nepali_dependency_parse}
+    \includegraphics[scale=0.17]{images/nepali_dependency_parse}
     \caption{Dependency tree for a sentence in dataset}
     \label{dep_tree_example}
 \end{figure}
@@ -297,6 +297,7 @@ well. We carry out series of experiments varying the languages, data sizes and l
 The following is the tabulation of experiments conducted and the results:
 \begin{table}[ht]
     \begin{center}
+        \scalebox{0.9}{
         \begin{tabular}{|c|c|c|c|c|c|}
             \hline
             \textbf{Exp. code} & \textbf{Languages} & \textbf{Dataset Size} & \textbf{Embeddings?} & \textbf{UAS} & \textbf{LAS} \\
@@ -341,6 +342,7 @@ The following is the tabulation of experiments conducted and the results:
             \textbf{multi\_np20em} & \textbf{np},multi & 18020 & Yes & \textbf{71.22} & \textbf{59.43} \\
             \hline
         \end{tabular}
+    }
         \caption{Experiments and results}
         \label{table:experiments_results}
     \end{center}
@@ -443,7 +445,7 @@ experiments are tabulated in Appendix \ref{experiments_time_appendix}.
 
 \begin{figure}[!h]
     \center
-    \includegraphics[scale=0.18]{images/sample_result}
+    \includegraphics[scale=0.15]{images/sample_result}
     \caption{Sample parse of \dev{प्रधानमन्त्री ले भने कि उनी किसान लाई नि:शुल्क बिजुली दिनु को विरोधी हुन् ।}}
     \label{img:sample_result1}
 \end{figure}
