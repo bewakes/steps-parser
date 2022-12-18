@@ -7,8 +7,7 @@ helpful in understanding the meaning, structure, and syntactical relationships
 in sentences which can further lead to more insightful tasks like knowledge
 graph creation, information retrieval, question answering and machine
 translation.  There are two kinds of sentence parsing:
-\begin{description}
-    \item [Constituency Parsing:]
+\subsection{Constituency Parsing}
         It defines the syntactical structure of a sentence by building a tree
         based on Context-Free Grammar. The words are the leaves of the tree,
         while non-leaf nodes show the abstract structure of the sentence.
@@ -18,7 +17,7 @@ translation.  There are two kinds of sentence parsing:
         grammatically incorrect sentence will be hard to parse. Algorithms like
         CKY(Cocke-Kasami-Younger) and shift-reduce are used for constituency
         parsing.
-    \item [Dependency Parsing:]
+\subsection{Dependency Parsing}
         It defines the grammatical structure of a sentence by showing the
         dependencies among the words in the sentence. The nodes are the words
         in the sentence and the arch between the nodes are labeled by
@@ -37,16 +36,14 @@ translation.  There are two kinds of sentence parsing:
         \caption{A dependency parsed Nepali sentence\cite{yajnik1}}
         \label{fig:dep_example_eng}
     \end{figure}
-    \newline
-\end{description}
 Although both kind of parsers suffer with ambiguous sentences, dependency
 parser is able to handle free word order languages. However, both types of
 parsing are important in computational linguistics and using one over other
 generally depends on the application. In this thesis, we focus on dependency
 parsing of Nepali Language.
 
-\subsection*{Approaches to Dependency Parsing}
-\subsubsection*{Transition-Based Dependency Parsing}
+\subsection{Approaches to Dependency Parsing}
+\subsubsection{Transition-Based Dependency Parsing}
 Transition based parsing consists of a stack on which we build the parse, a
 buffer from where the input tokens to be parsed are read and a parser which
 takes actions on the parse via a predictor called oracle. The parsing generally
@@ -72,7 +69,7 @@ classifier or neural methods.
     \label{fig:transition_based_parser}
 \end{figure}
 
-\subsubsection*{Graph-Based Dependency Parsing}
+\subsubsection{Graph-Based Dependency Parsing}
 This is a more advanced and accurate parsing approach which shines especially
 for long sentences. Transition-based methods have problems when the heads are
 very far from the dependents. These are effective because rather than relying on
@@ -86,7 +83,7 @@ sentence, score each of them and choose the best one.
     \label{fig:transition_based_parser}
 \end{figure}
 
-\subsection*{A Brief Note on Nepali Language}
+\subsection{A Brief Note on Nepali Language}
 Nepali, the national language of Nepal, is an Indo-Aryan language rooted from
 Sanskrit. It is written in Devanagari script developed from  the  Brahmi
 script in the 11th century AD. Nepali is spoken by about 56\% people in Nepal
